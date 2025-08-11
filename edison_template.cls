@@ -24,7 +24,7 @@
 
 \RequirePackage{geometry}
 \geometry{
-  top=3.4cm,
+  top=3.0cm,
   bottom=2.94cm,
   left=3.17cm,
   right=3.17cm,
@@ -34,7 +34,7 @@
 %======================================================================
 % 2. 字体与行距
 %======================================================================
-\RequirePackage[zihao=-4]{ctex}
+\RequirePackage[heading=true,zihao=-4]{ctex}
 \RequirePackage{iftex}
 \ifPDFTeX
   \PackageError{edison_template}{请使用 XeLaTeX 或 LuaLaTeX 编译}{本模板依赖 ctex + fontspec。}
@@ -137,7 +137,7 @@
   \fancyhead[RO]{\zihao{-5}\songti \edison@righthead}
   \fancyhead[LE]{\zihao{-5}\songti \edison@lefthead}
   \fancyfoot[C]{\zihao{-5}\thepage}
-  \renewcommand{\headrulewidth}{0.8pt}
+  \renewcommand{\headrulewidth}{1.0pt}
   \renewcommand{\footrulewidth}{0pt}
 }
 
@@ -214,19 +214,22 @@
 \newcommand{\maketitlepage}{
   \pagestyle{empty}
   \begin{center}
-    \includegraphics[width=0.8\textwidth]{images/zju-heading.png} \\
-    {\CJKfontspec{SimHei}[AutoFakeBold=3.0]\zihao{-1}
-      电气工程学院爱迪生班科研训练 \\[1.0em]
+    \null
+    \vspace{0.8cm}
+    \includegraphics[width=0.7\textwidth]{images/zju-heading.png} \\
+    {\CJKfontspec{SimHei}[AutoFakeBold=3.0]\bfseries\zihao{-1}
+      电气工程学院爱迪生班科研训练 \\[1.5em]
       中期报告}
     \\[3.0em]
     \includegraphics[width=0.2\textwidth]{images/zju.png} \\[2.0em]
     {\zihao{3}\bfseries \@title \\[2.0em]
-      \renewcommand{\arraystretch}{1.5}
+      \renewcommand{\arraystretch}{1.3}
       \setCJKfamilyfont{fangsong}[AutoFakeBold=2.5]{FangSong}
       \CJKfamily{fangsong}
       \setlength{\arrayrulewidth}{1.0pt}
+      % —— 关闭表格钩子，避免被统一宋体小五影响 ——
       \SongTablefalse
-      \begin{tabular}{lC{9.5cm}}
+      \begin{tabular}{lC{8.5cm}}
         姓名与学号 & \@stuname \hspace{1em} \@stuid \\ \cline{2-2}
         指导教师   & \@teacher \\ \cline{2-2}
         年级与专业 & \@grade \hspace{1em} \@major \\ \cline{2-2}
@@ -240,20 +243,23 @@
 
 \newcommand{\maketailpage}{
   \pagestyle{empty}
+  \null
+  \vspace{-2cm}
   \bfseries
   \begin{center}
     \zihao{-2}
     浙江大学电气工程学院 \\
-    爱迪生班科研训练中期报告考核表 \\[1em]
+    爱迪生班科研训练中期报告考核表 \\[1.6em]
   \end{center}
 
   {
-    \zihao{4}\noindent 对中期报告评语及成绩评定 \\[1.2em]
-    \renewcommand{\arraystretch}{1.3}
+    \zihao{4}\noindent 对中期报告评语及成绩评定 \\[2.0em]
+    \renewcommand{\arraystretch}{1.15}
+    % —— 关闭表格钩子 ——
     \SongTablefalse
-    \begin{tabular}{|c|p{3.5cm}|}
+    \begin{tabular}{|l|p{3.5cm}|}
       \hline
-      学生学号 &  \\
+      学~生~学~号 &  \\
       \hline
       中期报告成绩 &  \\
       \hline
@@ -261,7 +267,7 @@
     \SongTabletrue
   }
 
-  \zihao{-4}\vspace{10\baselineskip}
+  \zihao{-4}\vspace{10.5\baselineskip}
   \begin{flushright}
     指导教师（签名）\underline{\hspace{3.5cm}}\\
     \hspace{0.7cm} 年 \hspace{0.7cm} 月 \hspace{0.7cm} 日 \\
