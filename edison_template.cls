@@ -79,8 +79,8 @@
 }
 \captionsetup[sub]{labelfont={CJKcap}, textfont={CJKcap}}
 
-% \AddToHook{env/tabular/begin}{\CJKfamily{song}\zihao{5}\selectfont}
-% \AddToHook{env/tabular*/begin}{\CJKfamily{song}\zihao{5}\selectfont}
+\AddToHook{env/tabular/begin}{\CJKfamily{song}\zihao{5}\selectfont}
+\AddToHook{env/tabular*/begin}{\CJKfamily{song}\zihao{5}\selectfont}
 
 %==============================
 % 图表编号与方程编号
@@ -218,6 +218,7 @@
     \setCJKfamilyfont{fangsong}[AutoFakeBold=2.5]{FangSong}
     \CJKfamily{fangsong}
     \setlength{\arrayrulewidth}{1.0pt}
+    \RemoveFromHook{env/tabular/begin}{\CJKfamily{song}\zihao{5}\selectfont}
     \begin{tabular}{lC{9.5cm}}
       姓名与学号 & \@stuname \hspace{1em} \@stuid \\ \cline{2-2}
       指导教师 & \@teacher \\ \cline{2-2}
@@ -241,6 +242,7 @@
 
   {\zihao{4}\noindent 对中期报告评语及成绩评定 \\[1.2em]
   \renewcommand{\arraystretch}{1.3}
+  \RemoveFromHook{env/tabular/begin}{\CJKfamily{song}\zihao{5}\selectfont}
   \begin{tabular}{|c|p{3.5cm}|}
     \hline
     学生学号 &  \\
