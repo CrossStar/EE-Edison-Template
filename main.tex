@@ -1,3 +1,10 @@
+%
+% @Author: Zhixin Wu && wuzhixin.321@qq.com
+% @Date: 2025-08-11 11:54:28
+% @LastEditTime: 2025-08-11 15:28:02
+%
+% Copyright (c) 2025 by wuzhixin.321@qq.com, All Rights Reserved.
+%
 \documentclass{edison_template}
 
 \providecommand{\main}{.}
@@ -15,9 +22,12 @@
 \ExplSyntaxOn
 \keys_set:nn { zhlipsum } { name = zhufu }  % 设为默认
 \ExplSyntaxOff
-
 \usepackage{lipsum}
 
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\ExplSyntaxOn
+\msg_redirect_name:nnn { siunitx } { physics-pkg } { none }
+\ExplSyntaxOff
 
 \begin{document}
 % ------------------------- 首页内容 ------------------------- %
