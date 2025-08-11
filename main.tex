@@ -1,0 +1,51 @@
+\documentclass{edison_template}
+
+\providecommand{\main}{.}
+\addbibresource{\main/references/ref.bib}
+
+\title{这里填写你的科研训练标题}
+\stuname{这里填写你的姓名}
+\stuid{322010xxxx}
+\teacher{你的指导老师}
+\grade{2022 级}
+\major{电气工程及其自动化}
+\college{电气工程学院}
+
+\usepackage[encoding=utf8]{zhlipsum}
+\ExplSyntaxOn
+\keys_set:nn { zhlipsum } { name = zhufu }  % 设为默认
+\ExplSyntaxOff
+
+\usepackage{lipsum}
+
+
+\begin{document}
+% ------------------------- 首页内容 ------------------------- %
+\maketitlepage
+
+% % ------------------------ 摘要内容 ----------------------- %
+\pagestyle{plain}
+\pagenumbering{Roman}
+\subfile{contents/abstract}
+
+% ------------------------- 目录内容 ------------------------- %
+\tableofcontents
+\blankpage
+
+% ------------------------- 正文内容 ------------------------- %
+\pagenumbering{arabic}
+\subfile{contents/introduction}
+\subfile{contents/chapter-1}
+
+% ------------------------- 参考文献 ------------------------- %
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{参考文献}
+\printbibliography
+
+\clearpage
+\subfile{contents/appendix.tex}
+
+% ------------------------- 尾页内容 ------------------------- %
+\maketailpage
+\end{document}
