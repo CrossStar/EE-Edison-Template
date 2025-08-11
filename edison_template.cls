@@ -1,13 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{edison_template}[2024/07/25 Literature Review Class]
 
-%==============================
-% 基本信息与选项
-%==============================
-\renewcommand{\title}[1]{\def\@title{#1}}
-\newcommand{\LargeSection}[1]{\clearpage\begin{center}\zihao{3}\bfseries #1 \end{center}}
-\newcommand{\blankpage}{\clearpage\null\clearpage}
-
+%======================================================================
+% 0. 选项与公共命令
+%======================================================================
 \RequirePackage{kvoptions}
 \SetupKeyvalOptions{family=edison,prefix=edison@}
 \DeclareStringOption[浙江大学电气工程学院爱迪生班科研训练]{lefthead}
@@ -16,9 +12,14 @@
 \DeclareBoolOption[false]{unimath}
 \ProcessKeyvalOptions*
 
-%==============================
-% 基类与页面设置
-%==============================
+% 标题与章节大字样
+\renewcommand{\title}[1]{\def\@title{#1}}
+\newcommand{\LargeSection}[1]{\clearpage\begin{center}\zihao{3}\bfseries #1 \end{center}}
+\newcommand{\blankpage}{\clearpage\null\clearpage}
+
+%======================================================================
+% 1. 基类与页面设置
+%======================================================================
 \LoadClass[twoside]{article}
 
 \RequirePackage{geometry}
@@ -30,25 +31,27 @@
   bindingoffset=0cm
 }
 
-%==============================
-% 字体与行距
-%==============================
-\RequirePackage[heading=true,zihao=-4]{ctex}
+%======================================================================
+% 2. 字体与行距
+%======================================================================
+\RequirePackage[zihao=-4]{ctex}
 \RequirePackage{iftex}
 \ifPDFTeX
-  \PackageError{edison_template}{请使用 XeLaTeX 或 LuaLaTeX 编译}{本模板依赖 ctex+fontspec。}
+  \PackageError{edison_template}{请使用 XeLaTeX 或 LuaLaTeX 编译}{本模板依赖 ctex + fontspec。}
 \fi
 \RequirePackage{fontspec}
 
+% 中文与西文字体（保持你原有设定）
 \setCJKmainfont{FangSong}[AutoFakeBold=3.0]
 \setmainfont{Times New Roman}
 
+% 行距
 \RequirePackage{setspace}
-\setstretch{1.5} % 全文行距
+\setstretch{1.5}
 
-%==============================
-% 目录格式
-%==============================
+%======================================================================
+% 3. 目录格式
+%======================================================================
 \RequirePackage{tocloft}
 \renewcommand{\cftdotsep}{0.5}
 \renewcommand{\cftsecfont}{\bfseries}
@@ -61,16 +64,16 @@
 \renewcommand{\cftsubsubsecindent}{0.78cm}
 \renewcommand\contentsname{\LargeSection{目\quad 录}}
 
-%==============================
-% 图表标题格式
-%==============================
-\RequirePackage{subfig}
+%======================================================================
+% 4. 图表标题与表格字体钩子
+%======================================================================
 \RequirePackage{caption}
 \RequirePackage{subcaption}
 
 \setCJKfamilyfont{song}[AutoFakeBold=2.5]{SimSun}
 \newcommand{\bfsong}{\CJKfamily{song}\bfseries\zihao{5}\selectfont}
 
+% Caption 使用 CJK 宋体加粗小五
 \DeclareCaptionFont{CJKcap}{\bfsong}
 \captionsetup{
   labelfont={CJKcap},
@@ -79,12 +82,15 @@
 }
 \captionsetup[sub]{labelfont={CJKcap}, textfont={CJKcap}}
 
-\AddToHook{env/tabular/begin}{\CJKfamily{song}\zihao{5}\selectfont}
-\AddToHook{env/tabular*/begin}{\CJKfamily{song}\zihao{5}\selectfont}
+% 表格进入钩子（可开关）
+\newif\ifSongTable
+\SongTabletrue % 默认开启
+\AddToHook{env/tabular/begin}{\ifSongTable\CJKfamily{song}\zihao{5}\selectfont\fi}
+\AddToHook{env/tabular*/begin}{\ifSongTable\CJKfamily{song}\zihao{5}\selectfont\fi}
 
-%==============================
-% 图表编号与方程编号
-%==============================
+%======================================================================
+% 5. 编号、浮动体与分节
+%======================================================================
 \RequirePackage{chngcntr}
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
@@ -94,9 +100,9 @@
 \RequirePackage{etoolbox}
 \preto\section{\FloatBarrier}
 
-%==============================
-% 参考文献样式
-%==============================
+%======================================================================
+% 6. 参考文献
+%======================================================================
 \RequirePackage[
   style=gb7714-2015,
   backend=biber,
@@ -105,13 +111,13 @@
   url=false,
   doi=false
 ]{biblatex}
+
 \renewcommand*{\bibfont}{\songti\zihao{5}\selectfont}
 \setlength{\bibitemsep}{0pt}
 \setlength{\bibhang}{0.74cm}
-\defbibheading{bibliography}[\bibname]{%
-  \LargeSection{#1}
-}
+\defbibheading{bibliography}[\bibname]{\LargeSection{#1}}
 
+% 学位论文类型去 URL/urldate
 \DeclareSourcemap{
   \maps[datatype=bibtex]{
     \map{
@@ -122,12 +128,10 @@
   }
 }
 
-
-%==============================
-% 页眉页脚
-%==============================
+%======================================================================
+% 7. 页眉页脚
+%======================================================================
 \RequirePackage{fancyhdr}
-
 \fancypagestyle{plain}{
   \fancyhf{}
   \fancyhead[RO]{\zihao{-5}\songti \edison@righthead}
@@ -137,9 +141,9 @@
   \renewcommand{\footrulewidth}{0pt}
 }
 
-%==============================
-% 标题格式
-%==============================
+%======================================================================
+% 8. 标题样式
+%======================================================================
 \RequirePackage{titlesec}
 \titleformat{\section}{\zihao{3}\bfseries}{\thesection}{1em}{}
 \titlespacing{\section}{0pt}{10pt}{10pt}
@@ -149,9 +153,9 @@
 \titlespacing{\subsubsection}{0pt}{.5\baselineskip}{.5\baselineskip}
 \newcommand{\sectionbreak}{\clearpage}
 
-%==============================
-% 常用宏包
-%==============================
+%======================================================================
+% 9. 常用宏包
+%======================================================================
 \RequirePackage{graphicx}
 \RequirePackage{pdfpages}
 \RequirePackage{enumerate}
@@ -170,15 +174,16 @@
 \RequirePackage{mathtools}
 \RequirePackage{microtype}
 
-%==============================
-% 超链接与引用
-%==============================
+%======================================================================
+% 10. 超链接与引用
+%======================================================================
 \RequirePackage{hyperref}
 \ifedison@colorlinks
   \hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
 \else
   \hypersetup{hidelinks}
 \fi
+
 \RequirePackage[nameinlink]{cleveref}
 \crefname{figure}{图}{图}
 \Crefname{figure}{图}{图}
@@ -187,9 +192,9 @@
 \crefname{equation}{公式}{公式}
 \Crefname{equation}{公式}{公式}
 
-%==============================
-% 用户信息命令
-%==============================
+%======================================================================
+% 11. 用户信息命令
+%======================================================================
 \newcommand{\stuname}[1]{\def\@stuname{#1}}
 \newcommand{\stuid}[1]{\def\@stuid{#1}}
 \newcommand{\teacher}[1]{\def\@teacher{#1}}
@@ -197,37 +202,39 @@
 \newcommand{\major}[1]{\def\@major{#1}}
 \newcommand{\college}[1]{\def\@college{#1}}
 
-%==============================
-% 表格列类型
-%==============================
+%======================================================================
+% 12. 表格列类型
+%======================================================================
 \RequirePackage{array}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 
-%==============================
-% 封面页命令
-%==============================
+%======================================================================
+% 13. 封面与尾页
+%======================================================================
 \newcommand{\maketitlepage}{
   \pagestyle{empty}
   \begin{center}
     \includegraphics[width=0.8\textwidth]{images/zju-heading.png} \\
-    {\CJKfontspec{SimHei}[AutoFakeBold=3.0]\zihao{-1} 电气工程学院爱迪生班科研训练 \\[1.0em] 中期报告}
- \\[3.0em]
+    {\CJKfontspec{SimHei}[AutoFakeBold=3.0]\zihao{-1}
+      电气工程学院爱迪生班科研训练 \\[1.0em]
+      中期报告}
+    \\[3.0em]
     \includegraphics[width=0.2\textwidth]{images/zju.png} \\[2.0em]
     {\zihao{3}\bfseries \@title \\[2.0em]
-    \renewcommand{\arraystretch}{1.5}
-    \setCJKfamilyfont{fangsong}[AutoFakeBold=2.5]{FangSong}
-    \CJKfamily{fangsong}
-    \setlength{\arrayrulewidth}{1.0pt}
-    \RemoveFromHook{env/tabular/begin}{\CJKfamily{song}\zihao{5}\selectfont}
-    \begin{tabular}{lC{9.5cm}}
-      姓名与学号 & \@stuname \hspace{1em} \@stuid \\ \cline{2-2}
-      指导教师 & \@teacher \\ \cline{2-2}
-      年级与专业 & \@grade \hspace{1em} \@major \\ \cline{2-2}
-      所在学院 & \@college \\ \cline{2-2}
-    \end{tabular}
+      \renewcommand{\arraystretch}{1.5}
+      \setCJKfamilyfont{fangsong}[AutoFakeBold=2.5]{FangSong}
+      \CJKfamily{fangsong}
+      \setlength{\arrayrulewidth}{1.0pt}
+      \SongTablefalse
+      \begin{tabular}{lC{9.5cm}}
+        姓名与学号 & \@stuname \hspace{1em} \@stuid \\ \cline{2-2}
+        指导教师   & \@teacher \\ \cline{2-2}
+        年级与专业 & \@grade \hspace{1em} \@major \\ \cline{2-2}
+        所在学院   & \@college \\ \cline{2-2}
+      \end{tabular}
+      \SongTabletrue
     }
   \end{center}
-
   \blankpage
 }
 
@@ -235,21 +242,24 @@
   \pagestyle{empty}
   \bfseries
   \begin{center}
-  \zihao{-2}
-  浙江大学电气工程学院 \\
-  爱迪生班科研训练中期报告考核表 \\[1em]
+    \zihao{-2}
+    浙江大学电气工程学院 \\
+    爱迪生班科研训练中期报告考核表 \\[1em]
   \end{center}
 
-  {\zihao{4}\noindent 对中期报告评语及成绩评定 \\[1.2em]
-  \renewcommand{\arraystretch}{1.3}
-  \RemoveFromHook{env/tabular/begin}{\CJKfamily{song}\zihao{5}\selectfont}
-  \begin{tabular}{|c|p{3.5cm}|}
-    \hline
-    学生学号 &  \\
-    \hline
-    中期报告成绩 &  \\
-    \hline
-  \end{tabular}}
+  {
+    \zihao{4}\noindent 对中期报告评语及成绩评定 \\[1.2em]
+    \renewcommand{\arraystretch}{1.3}
+    \SongTablefalse
+    \begin{tabular}{|c|p{3.5cm}|}
+      \hline
+      学生学号 &  \\
+      \hline
+      中期报告成绩 &  \\
+      \hline
+    \end{tabular}
+    \SongTabletrue
+  }
 
   \zihao{-4}\vspace{10\baselineskip}
   \begin{flushright}
@@ -258,11 +268,14 @@
   \end{flushright}
 }
 
+%======================================================================
+% 14. 子文件
+%======================================================================
 \RequirePackage{subfiles}
 
-%==============================
-% 其他辅助命令
-%==============================
+%======================================================================
+% 15. 其他辅助
+%======================================================================
 \newcommand{\EdisonLeftHead}[1]{\renewcommand{\edison@lefthead}{#1}}
 \newcommand{\EdisonRightHead}[1]{\renewcommand{\edison@righthead}{#1}}
 
