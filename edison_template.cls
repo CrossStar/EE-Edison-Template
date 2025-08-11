@@ -222,7 +222,7 @@
       中期报告}
     \\[3.0em]
     \includegraphics[width=0.2\textwidth]{images/zju.png} \\[2.0em]
-    {\zihao{3}\bfseries \@title \\[2.0em]
+    {\zihao{3}\bfseries \underline{\@title} \\[2.0em]
       \renewcommand{\arraystretch}{1.3}
       \setCJKfamilyfont{fangsong}[AutoFakeBold=2.5]{FangSong}
       \CJKfamily{fangsong}
