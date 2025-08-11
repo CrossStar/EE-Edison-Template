@@ -18,16 +18,12 @@
 \major{电气工程及其自动化}
 \college{电气工程学院}
 
+% 假文相关，正式使用时可以删除
 \usepackage[encoding=utf8]{zhlipsum}
 \ExplSyntaxOn
 \keys_set:nn { zhlipsum } { name = zhufu }  % 设为默认
 \ExplSyntaxOff
 \usepackage{lipsum}
-
-\AtBeginDocument{\RenewCommandCopy\qty\SI}
-\ExplSyntaxOn
-\msg_redirect_name:nnn { siunitx } { physics-pkg } { none }
-\ExplSyntaxOff
 
 \begin{document}
 % ------------------------- 首页内容 ------------------------- %

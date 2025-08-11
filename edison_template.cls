@@ -264,5 +264,9 @@
 \newcommand{\EdisonLeftHead}[1]{\renewcommand{\edison@lefthead}{#1}}
 \newcommand{\EdisonRightHead}[1]{\renewcommand{\edison@righthead}{#1}}
 
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+\ExplSyntaxOn
+\msg_redirect_name:nnn { siunitx } { physics-pkg } { none }
+\ExplSyntaxOff
 
 \endinput
