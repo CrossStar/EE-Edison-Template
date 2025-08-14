@@ -30,7 +30,11 @@
 ```
 
 ## 使用方法
-1. 克隆或下载本仓库到本地。
+1. 使用如下命令克隆本仓库到本地。
+```bash
+git clone https://github.com/CrossStar/EE-Edison-Template
+```
+
 2. 确保你已经安装了 $\LaTeX$ 发行版（如 TeX Live 或 MikTeX）。
 3. 在 `main.tex` 文件中填写必要的信息，并在 `contents/` 文件夹下分章节编写内容。
 4. 使用恰当的 $\LaTeX$ 编辑器（如 VSCode，TeXStudio 或者 Overleaf）编译 `main.tex` 文件得到完整的文档。
